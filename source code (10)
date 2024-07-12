@@ -1,0 +1,61 @@
+/******************************************************************************
+
+Welcome to GDB Online.
+  GDB online is an online compiler and debugger tool for C, C++, Python, PHP, Ruby, 
+  C#, OCaml, VB, Perl, Swift, Prolog, Javascript, Pascal, COBOL, HTML, CSS, JS
+  Code, Compile, Run and Debug online from anywhere in world.
+
+*******************************************************************************/
+class Restaurant:
+    def __init__(self):
+        self.menu = {
+            "pizza": 12,
+            "burger": 8,
+            "salad": 6,
+            "pasta": 10,
+            "steak": 15
+        }
+        self.total_revenue = 0
+
+    def take_order(self):
+        print("Welcome to our restaurant! Here is our menu:")
+        for item, price in self.menu.items():
+            print(f"{item.capitalize()}: ${price}")
+
+        order = input("\nPlease enter your order (separate items by comma): ").strip().lower()
+        items = order.split(",")
+        total_price = 0
+
+        for item in items:
+            item = item.strip()
+            if item in self.menu:
+                total_price += self.menu[item]
+            else:
+                print(f"Sorry, '{item}' is not available in our menu.")
+
+        print(f"\nTotal Price for your order: ${total_price}")
+
+        self.total_revenue += total_price
+
+    def show_revenue(self):
+        print(f"\nTotal Revenue: ${self.total_revenue}")
+
+
+if __name__ == "__main__":
+    restaurant = Restaurant()
+
+    while True:
+        print("\n1. Take Order")
+        print("2. Show Total Revenue")
+        print("3. Exit")
+        choice = input("Please enter your choice (1/2/3): ")
+
+        if choice == '1':
+            restaurant.take_order()
+        elif choice == '2':
+            restaurant.show_revenue()
+        elif choice == '3':
+            print("Exiting the program. Goodbye!")
+            break
+        else:
+            print("Invalid choice! Please enter 1, 2, or 3.")
