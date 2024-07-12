@@ -1,0 +1,83 @@
+/******************************************************************************
+
+Welcome to GDB Online.
+  GDB online is an online compiler and debugger tool for C, C++, Python, PHP, Ruby, 
+  C#, OCaml, VB, Perl, Swift, Prolog, Javascript, Pascal, COBOL, HTML, CSS, JS
+  Code, Compile, Run and Debug online from anywhere in world.
+
+*******************************************************************************/
+#include <iostream>
+#include <string>
+#include <vector>
+
+// پیش شماره‌های معتبر که از تمرین قبلی گرفته شده‌اند
+std::vector<std::string> validPrefixes = {"6037", "6219", "6362", "6393"};
+
+int main() {
+    std::string cardNumber = "";
+    int count = 0;
+
+    std::cout << "Enter your 16-digit bank card number:\n";
+
+    while (count < 16) {
+        char digit;
+        std::cin >> digit;
+
+        // اگر عدد وارد شده نامعتبر باشد، پیام خطا چاپ شود و از حلقه از اول شروع شود
+        if (!isdigit(digit)) {
+            std::cout << "Error: Invalid input. Please enter a valid digit.\n";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            count = 0;
+            cardNumber = "";
+            continue;
+        }
+
+        cardNumber += digit;
+        count++;
+
+        // نمایش اعداد وارد شده تا این لحظه به کاربر
+        if (count <= 16) {
+            std::cout << "Current card number: ";
+            for (int i = 0; i < count; ++i) {
+                std::cout << cardNumber[i];
+                if ((i + 1) % 4 == 0 && i < 15) {
+                    std::cout << "-";
+                }
+            }
+            std::cout << std::endl;
+        }
+
+        // اگر 4 رقم اول وارد شده، اعتبارسنجی انجام شود
+        if (count == 4) {
+            std::string prefix = cardNumber.substr(0, 4);
+            bool isValidPrefix = false;
+            for (const auto& validPrefix : validPrefixes) {
+                if (prefix == validPrefix) {
+                    isValidPrefix = true;
+                    break;
+                }
+            }
+            if (isValidPrefix) {
+                std::cout << "Valid card prefix detected.\n";
+            } else {
+                std::cout << "Invalid card prefix detected.\n";
+                std::cout << "Please enter a valid card number.\n";
+                count = 0;
+                cardNumber = "";
+            }
+        }
+    }
+
+    // جدا کردن کارت به دسته‌های 4 رقمی و چاپ
+    std::cout << "Separated card number:\n";
+    for (int i = 0; i < 16; ++i) {
+        std::cout << cardNumber[i];
+        if ((i + 1) % 4 == 0 && i < 15) {
+            std::cout << "-";
+        }
+    }
+    std::cout << std::endl;
+
+    return 0;
+}
